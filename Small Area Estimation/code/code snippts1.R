@@ -43,7 +43,7 @@ compare_plot(mdi_direct, mdi_model, indicator = c("Gini", "Median"),
 #maps of point estimates and CVs of the median income for 94 districts in Austria.
 map_plot(mdi_model, MSE = FALSE, CV = TRUE, map_obj = shape_austria_dis,
           indicator = "Median", map_dom_id = "PB")
-# Export of the summary output and estimates to Exce
+# Export of the summary data, output, and estimates to Excel.
 write.excel(mdi_model, file = "excel_output.xlsx", indicator = "Median",
              MSE = FALSE, CV = TRUE)
 write.csv(eusilcA_pop,"eusilcA_pop.CSV")

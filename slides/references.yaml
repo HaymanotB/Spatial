@@ -1,0 +1,38 @@
+---
+references:
+- id: kreutzmann2019
+  author:
+  - family: Kreutzmann
+    given: Ann-Kristin
+  - family: Pannier
+    given: Sören
+  - family: Rojas-Perilla
+    given: Natalia
+  - family: Schmid
+    given: Timo
+  - family: Templ
+    given: Matthias
+  - family: Tzavidis
+    given: Nikos
+  container-title: Journal of Statistical Software
+  container-title-short: J. Stat. Soft.
+  DOI: 10.18637/jss.v091.i07
+  is-referenced-by-count: 27
+  ISSN: 1548-7660
+  issue: 7
+  issued: 2019
+  language: en
+  member: 7893
+  prefix: 10.18637
+  providerKey: doi
+  publisher: Foundation for Open Access Statistic
+  reference-count: 0
+  references-count: 0
+  score: 1
+  source: Crossref
+  title: The *R* Package **emdi** for Estimating and Mapping Regionally
+    Disaggregated Indicators
+  type: article-journal
+  URL: "http://dx.doi.org/10.18637/jss.v091.i07"
+  volume: 91
+...

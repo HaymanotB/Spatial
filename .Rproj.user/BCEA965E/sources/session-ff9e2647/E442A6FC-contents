@@ -1,0 +1,31 @@
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(openxlsx)
+
+# Step 1: Read the district map data from the "Spatial adjacency matrix" sheet
+datafile <- file.path(datapath, "South_Africa_District_HIV_Data.xlsx")
+district_map <- read_xlsx(path = datafile, sheet = "Spatial adjacency matrix")
+
+# Assuming the first column is 'DistrictCode' and the rest are adjacency indicators
+# Step 2: Identify adjacent neighbors for each district
+district_neighbors <- district_map %>%
+  gather(key = "Neighbor", value = "is_neighbor", -DistrictCode) %>%
+  filter(is_neighbor == 1) %>%
+  select(-is_neighbor)
+
+# Step 3: Calculate non-zero elements as 1/n
+district_proxmat <- district_neighbors %>%
+  group_by(code) %>%
+  mutate(n_neighbors = n()) %>%
+  ungroup() %>%
+  mutate(weight = 1 / n_neighbors) %>%
+  select(code, Neighbor, weight)
+
+# Step 4: Ensure each row sums to 1
+district_proxmat_wide <- district_proxmat %>%
+  spread(key = Neighbor, value = weight, fill = 0)
+
+# Step 5: Write the resulting proximity matrix to a new sheet called "proxmat"
+write.xlsx(district_proxmat_wide, file = datafile, sheetName = "proxmat", append = TRUE)
+

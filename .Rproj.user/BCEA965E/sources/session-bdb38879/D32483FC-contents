@@ -1,0 +1,55 @@
+---
+title: "introduction to spatial data analysis"
+author: "Haymanot Berelie"
+date: "7/24/2024"
+format: revealjs
+editor: visual
+---
+
+## 
+
+## **Definition**
+
+#### ***WHAT IS A SMALL AREA?***
+
+Sample surveys have long been recognized as cost-effective means of obtaining information on wide-ranging topics of interest at frequent intervals over time. They are widely used in practice to provide estimates not only for the total population of interest but also for a variety of subpopulations (domains). Domains may be defined by geographic areas or socio-demographic groups or other subpopulations. Examples of a geographic domain (area) include a state/province, county, municipality, school district, unemployment insurance (UI) region, metropolitan area, and health service area. \## On the other hand, a socio-demographic domain may refer to a specific age-sex-race group within a large geographic area. An example of “other domains” is the set of business firms belonging to a census division by industry group.In the context of sample surveys, we refer to a domain estimator as “direct” if it is based only on the domain-specific sample data. A direct estimator may also use the known auxiliary information, such as the total of an auxiliary variable, x, related to the variable of interest, y.
+
+## 
+
+In recent years an increased number of policy decisions has been based on statistical information derived from indicators estimated at dis-aggregated geographical levels using small area estimation methods. A domain (area) is regarded as large (or major) if the domain-specific sample is large enough to yield “direct estimates” of adequate precision. A domain is regarded as “small” if the domain-specific sample is not large enough to support direct estimates of adequate precision
+
+# **Terminology**
+
+-   Domain
+
+-   Area
+
+-   Disaggregated
+
+-   local area
+
+-   subdomain
+
+-   small subgroup
+
+-   subprovince
+
+-   minor domain.
+
+\##
+
+In some applications, many domains of interest (such as counties) may have zero sample size. in this case a direct estimates cannot be produced adequate precision. Typically, domain sample size tends to increase with the population size of the domain, but this is not always the case. Due to cost considerations, it is often not possible to have a large enough overall sample size to support reliable direct estimates for all domains. Furthermore, in practice, it is not possible to anticipate all uses of the survey data, and “the client will always require more than is specified at the design stage” (Fuller 1999, p. 344).
+
+\##
+
+In making estimates for small areas with adequate level of precision, it is often necessary to use “indirect” estimators that “borrow strength” by using values of the variable of interest, y, from related areas and/or time periods and thus increase the “effective” sample size. These values are brought into the estimation process through a model (either implicit or explicit) that provides a link to related areas and/or time periods through the use of supplementary information related to y, such as recent census counts and current administrative records.
+
+\##
+
+Three types of indirect estimators can be identified (Schaible 1996, Chapter 1): “domain indirect,” “time indirect,” and “domain and time indirect.” A domain indirect estimator makes use of y-values from another domain but not from another time period. A time indirect estimator uses y-values from another time period for the domain of interest but not from another domain. On the other hand, a domain and time indirect estimator uses y-values from another domain as well as from another time period. Some other terms used to denote an indirect estimator include “non-traditional,” “small area,” “model dependent,” and “synthetic.”
+
+\##
+
+**packages(SAE)**
+
+## **Deal about the package in detail**

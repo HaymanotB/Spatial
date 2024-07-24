@@ -1,0 +1,5 @@
+[1,"==> quarto preview slide.qmd --to revealjs --presentation --no-watch-inputs --no-browse\n\n"]
+[1,"pandoc \n  to: revealjs\n  output-file: slide.html\n  standalone: true\n  wrap: none\n  default-image-extension: png\n  html-math-method:\n    method: mathjax\n    url: >-\n      https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full\n  slide-level: 2\n  \nmetadata\n  link-citations: true\n  width: 1050\n  height: 700\n  margin: 0.1\n  center: false\n  navigationMode: linear\n  controlsLayout: edges\n  controlsTutorial: false\n  hash: true\n  history: true\n  hashOneBasedIndex: false\n  fragmentInURL: false\n  transition: none\n  backgroundTransition: none\n  pdfSeparateFragments: false\n  lang: en\n  auto-stretch: true\n  title: Untitled\n  editor: visual\n  \n"]
+[1,"Output created: slide.html\n\nWatching files for changes\n"]
+[1,"Browse at "]
+[1,"http://localhost:3341/\n"]

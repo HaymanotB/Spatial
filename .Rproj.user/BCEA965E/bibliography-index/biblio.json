@@ -1,0 +1,60 @@
+{
+    "sources": [
+        {
+            "DOI": "10.18637/jss.v091.i07",
+            "ISSN": "1548-7660",
+            "URL": "http://dx.doi.org/10.18637/jss.v091.i07",
+            "author": [
+                {
+                    "family": "Kreutzmann",
+                    "given": "Ann-Kristin"
+                },
+                {
+                    "family": "Pannier",
+                    "given": "Sören"
+                },
+                {
+                    "family": "Rojas-Perilla",
+                    "given": "Natalia"
+                },
+                {
+                    "family": "Schmid",
+                    "given": "Timo"
+                },
+                {
+                    "family": "Templ",
+                    "given": "Matthias"
+                },
+                {
+                    "family": "Tzavidis",
+                    "given": "Nikos"
+                }
+            ],
+            "container-title": "Journal of Statistical Software",
+            "container-title-short": "J. Stat. Soft.",
+            "id": "kreutzmann2019",
+            "is-referenced-by-count": "27",
+            "issue": "7",
+            "issued": {
+                "date-parts": [
+                    [
+                        2019
+                    ]
+                ]
+            },
+            "language": "en",
+            "member": "7893",
+            "prefix": "10.18637",
+            "providerkey": "doi",
+            "publisher": "Foundation for Open Access Statistic",
+            "reference-count": "0",
+            "references-count": "0",
+            "score": "1",
+            "source": "Crossref",
+            "title": "The <i>R</i> Package <b>emdi</b> for Estimating and Mapping Regionally Disaggregated Indicators",
+            "type": "article-journal",
+            "volume": "91"
+        }
+    ],
+    "project_biblios": []
+}

@@ -10,7 +10,9 @@
 <link href="slide_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.553">
 
-  <title>Untitled</title>
+  <meta name="author" content=" By Haymanot Berelie">
+  <meta name="dcterms.date" content="2024-07-24">
+  <title>Spatial Data Analaysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,7 +30,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="slide_files/libs/revealjs/dist/theme/quarto.css">
   <link href="slide_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="slide_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -324,62 +346,83 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Untitled</h1>
+<section id="title-slide" data-background-color="#001E4E" data-background-image="img.png" data-background-opacity="2.5" data-background-size="stretch" class="quarto-title-block center">
+  <h1 class="title"><p><span style="color:red">Spatial Data Analaysis</span></p></h1>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+<span style="color:white"> By Haymanot Berelie</span> 
+</div>
+        <p class="quarto-title-affiliation">
+            </p><p><span style="color:white">Assosa University</span></p>
+          <p></p>
+    </div>
 </div>
 
+  <p class="date">2024-07-24</p>
 </section>
-<section id="quarto" class="slide level2">
-<h2>Quarto\=</h2>
-<table>
-<thead>
-<tr class="header">
-<th>Col1</th>
-<th>Col2</th>
-<th>Col3</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Quarto enables you to weave together <strong>content</strong> and executable <code>code</code> into a finished presentation. To learn more about Quarto presentations see <a href="https://quarto.org/docs/presentations/" class="uri">https://quarto.org/docs/presentations/</a>.</p>
-</section>
-<section id="bullets" class="slide level2">
-<h2>Bullets</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes:</p>
+<section id="section" class="slide level2" data-background-image="img3.jpg">
+<h2></h2>
+<h3 id="outlines">Outlines</h3>
 <ul>
-<li>Content authored with markdown</li>
-<li>Output from executable code</li>
+<li><p>What is <strong>Small Area Estimation(SAE)</strong> ?</p></li>
+<li><p>SAE terminologies</p></li>
+<li><p>SAE Models</p></li>
+<li><p>Methods of SAE</p></li>
+<li><p>R packages for SAE</p></li>
+<li><p>Visualizing spatial data</p></li>
 </ul>
 </section>
-<section id="code" class="slide level2">
-<h2>Code</h2>
-<p>When you click the <strong>Render</strong> button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<p>Sample surveys have long been recognized as cost-effective means of obtaining information on wide-ranging topics of interest at frequent intervals over time. They are widely used in practice to provide estimates not only for the total population of interest but also for a variety of subpopulations (domains). Domains may be defined by geographic areas or socio-demographic groups or other subpopulations. Examples of a geographic domain (area) include a state/province, county, municipality, school district, unemployment insurance (UI) region, metropolitan area, and health service area. ##</p>
+<p>On the other hand, a socio-demographic domain may refer to a specific age-sex-race group within a large geographic area. An example of “other domains” is the set of business firms belonging to a census division by industry group.In the context of sample surveys, we refer to a domain estimator as “direct” if it is based only on the domain-specific sample data. A direct estimator may also use the known auxiliary information, such as the total of an auxiliary variable, x, related to the variable of interest, y.</p>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<p>In recent years an increased number of policy decisions has been based on statistical information derived from indicators estimated at dis-aggregated geographical levels using small area estimation methods<span class="citation" data-cites="kreutzmann2019">(<a href="#/deal-about-the-package-in-detail" role="doc-biblioref" onclick="">Kreutzmann et al., 2019</a>)</span>. A domain (area) is regarded as large (or major) if the domain-specific sample is large enough to yield “direct estimates” of adequate precision. A domain is regarded as “small” if the domain-specific sample is not large enough to support direct estimates of adequate precision</p>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<p><strong>Terminology</strong></p>
+<ul>
+<li><p>Domain</p></li>
+<li><p>Area</p></li>
+<li><p>Disaggregated</p></li>
+<li><p>local area</p></li>
+<li><p>subdomain</p></li>
+<li><p>small subgroup</p></li>
+<li><p>subprovince</p></li>
+<li><p>minor domain.</p></li>
+</ul>
+</section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+<p>In some applications, many domains of interest (such as counties) may have zero sample size. in this case a direct estimates cannot be produced adequate precision. Typically, domain sample size tends to increase with the population size of the domain, but this is not always the case. Due to cost considerations, it is often not possible to have a large enough overall sample size to support reliable direct estimates for all domains. Furthermore, in practice, it is not possible to anticipate all uses of the survey data, and “the client will always require more than is specified at the design stage” (Fuller 1999, p.&nbsp;344).</p>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<p>In making estimates for small areas with adequate level of precision, it is often necessary to use “indirect” estimators that “borrow strength” by using values of the variable of interest, y, from related areas and/or time periods and thus increase the “effective” sample size. These values are brought into the estimation process through a model (either implicit or explicit) that provides a link to related areas and/or time periods through the use of supplementary information related to y, such as recent census counts and current administrative records.</p>
+</section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+<p>Three types of indirect estimators can be identified (Schaible 1996, Chapter 1): “domain indirect,” “time indirect,” and “domain and time indirect.” A domain indirect estimator makes use of y-values from another domain but not from another time period. A time indirect estimator uses y-values from another time period for the domain of interest but not from another domain. On the other hand, a domain and time indirect estimator uses y-values from another domain as well as from another time period. Some other terms used to denote an indirect estimator include “non-traditional,” “small area,” “model dependent,” and “synthetic.”</p>
+</section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+<p><strong>packages(SAE)</strong></p>
+</section>
+<section id="deal-about-the-package-in-detail" class="slide level2 smaller scrollable">
+<h2><strong>Deal about the package in detail</strong></h2>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-kreutzmann2019" class="csl-entry" role="listitem">
+Kreutzmann, A.-K., Pannier, S., Rojas-Perilla, N., Schmid, T., Templ, M., &amp; Tzavidis, N. (2019). The <em>R</em> Package <strong>emdi</strong> for Estimating and Mapping Regionally Disaggregated Indicators. <em>Journal of Statistical Software</em>, <em>91</em>(7). <a href="https://doi.org/10.18637/jss.v091.i07">https://doi.org/10.18637/jss.v091.i07</a>
 </div>
 </div>
 </section>
@@ -593,82 +636,6 @@
         ]
       });
     </script>
-    
-
-    <script>
-
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
-      // slide changes (different for each slide format).
-
-      (function () {
-
-        // dispatch for htmlwidgets
-
-        function fireSlideEnter() {
-
-          const event = window.document.createEvent("Event");
-
-          event.initEvent("slideenter", true, true);
-
-          window.document.dispatchEvent(event);
-
-        }
-
-    
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          fireSlideEnter();
-
-    
-
-          // dispatch for shiny
-
-          if (window.jQuery) {
-
-            if (previousSlide) {
-
-              window.jQuery(previousSlide).trigger("hidden");
-
-            }
-
-            if (currentSlide) {
-
-              window.jQuery(currentSlide).trigger("shown");
-
-            }
-
-          }
-
-        }
-
-    
-
-        // hookup for slidy
-
-        if (window.w3c_slidy) {
-
-          window.w3c_slidy.add_observer(function (slide_num) {
-
-            // slide_num starts at position 1
-
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
-          });
-
-        }
-
-    
-
-      })();
-
-    </script>
-
-    
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

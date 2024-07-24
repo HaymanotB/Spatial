@@ -1,0 +1,877 @@
+---
+title: |
+       <span style="color:white">Spatial data analaysis Training</span>
+author: 
+  - <span style='color:white'>Yebelay Berehan</span>
+
+institute: |
+       <span style="color:white">Debre Markos University + C4ED</span><br><br><br><br>
+       <span style="color:red">`r Sys.Date()`</span>
+
+title-slide-attributes:
+  data-background-image: sp.png
+  data-background-size: stretch
+  data-background-opacity: "2.5"
+  data-background-color: "#001E4E"
+format: 
+  revealjs:
+    slide-number: true
+    logo: logo-title-slide.png
+    footer: "[?](https://github.com/Yebelay)&nbsp;&nbsp;&nbsp;"
+    theme: custom.css
+    code-link: true
+    code-fold: show
+    code-tools: true
+    highlight-style: github
+  #  preview-links: auto
+    chalkboard: 
+      boardmarker-width: 3
+    multiplex: true
+from: markdown+emoji
+execute:
+  echo: true
+---
+
+##  {background-image="cover.jpeg"}
+
+### Outlines
+
+-   What is **Spatial** data and why should we use it?
+
+-   Types of spatial data
+
+-   Spatial data in R: how to store, load, and tidy spatial data
+
+-   Visualizing spatial data
+
+-   Exploring spatial data: Spatial authorization and spatial statistics to quantify relationships
+
+------------------------------------------------------------------------
+
+## **What is Spatial data and why should we use it?**
+
+-   [**Spatial data, also known as geospatial data**]{style="color:green;"}, refers to information that identifies the geographic location and characteristics of natural or constructed features and boundaries on the Earth.
+
+-   This data is often represented in terms of [**Cartesian coordinates (x,y)**]{style="color:red ;"} for two-dimensional maps, but may also include [altitude (z)]{style="color:red ;"} for a three-dimensional representation.
+
+-   Spatial data can come in various forms including points (e.g., GPS coordinates), lines (e.g., roads or rivers), and polygons (e.g., borders, land use zones).
+
+-   The concept of spatial data is integral to a variety of applications that require an understanding of how different elements relate to each other within a geographical space.
+
+-   This data can be collected through various means, including but not limited to, satellite imagery, aerial photography, and ground-based surveys.
+
+------------------------------------------------------------------------
+
+## Types of Spatial Data
+
+| **Type**                               | **Definition**                                                                                                           | **Examples**                                                                                                     |
+|--------------|-------------------------------|---------------------------|
+| [**Vector Data**]{style="color:blue;"} | [**Points:**]{style="color:red;"} Represents features with a single coordinate pair [**(x, y)**]{style="color:purple;"}. | Locations of [**ATMs**]{style="color:green;"}, [**tree**]{style="color:green;"}                                  |
+|                                        | [**Lines:**]{style="color:red;"} Represents linear features as ordered sequences of points.                              | [**Roads**]{style="color:green;"}, [**rivers**]{style="color:green;"}, [**utility lines**]{style="color:green;"} |
+|                                        | [**Polygons:**]{style="color:red;"} Represents areas enclosed by closed loops of lines.                                  | [**Buildings**]{style="color:green;"}, [**lakes**]{style="color:green;"}, [**zones**]{style="color:green;"}      |
+| [**Raster Data**]{style="color:blue;"} | **Grids:** Represents continuous data across a surface.                                                                  | [**Satellite images**]{style="color:green;"}, [**digital elevation models (DEMs)**]{style="color:green;"}        |
+|                                        | **Pixels:** Smallest units in a raster dataset, each with a specific value.                                              | Values representing color, temperature,                                                                          |
+
+------------------------------------------------------------------------
+
+## Other data associated with Vector and Raster
+
+-   [**Attribute data:**]{style="color:cyan;"} Additional information describing the characteristics of spatial features.
+-   For example in Vector data:
+    -   **Schools:** have school name, number of students, education level.
+    -   **Roads:**have road type, traffic volume, maintenance status.
+    -   **Regions:** have population density, average income, and land use type.
+
+**In Raster Data:** Each pixel can have multiple attributes, such as vegetation type or pollution levels.
+
+## What are the components of spatial data
+
+-   [**Geometry:**]{style="color:#ae01c7;"} Refers to the coordinates that define the shape of an object.
+    -   [**Coordinates:**]{style="color:blue;"} These can be in different coordinate systems, such as geographic ([latitude]{style="color:purple;"}) and [longitude]{style="color:purple;"}) or projected systems.
+    -   [**Types of Geometries:**]{style="color:blue;"} Common types include [points]{style="color:blue;"}, [lines]{style="color:blue;"}, and [polygons]{style="color:blue;"}.
+    -   [**Dimension:**]{style="color:blue;"} Geometry can also have dimensional attributes like [2D]{style="color:purple;"} (x, y), [3D]{style="color:purple;"} (x, y, z), or even [4D]{style="color:purple;"} (x, y, z, time).
+-   [**Topology:**]{style="color:#ae01c7;"} Refers to the spatial relationships between geometric entities.
+    -    **Spatial Relationships**
+        -   **Adjacency**: How entities are next to each other.
+        -   **Connectivity**: How entities are connected.
+        -   **Containment**: How one entity is contained within another.
+    -   **Rules and Constraints:** Enforces rules such as:
+        -   No overlapping polygons.
+
+        -   Lines meeting at nodes.
+
+        -   Ensuring polygon boundaries are closed loops.
+
+[**Attribute Data:**]{style="color:#ae01c7;"} provide detailed information about spatial features.
+
+-   Example: A point representing a city may have attributes like population, elevation, and city name.
+
+-   **Types of Attributes:** Attribute data is either, **Numeric** (population size), **Categorical** (land use type), or **Temporal** (date of a satellite image).
+
+-   Attribute data is often stored in tables and linked to geometry through unique identifiers.
+
+    ------------------------------------------------------------------------
+
+### How does the workflow of handling spatial data effectively
+
+Let us see the steps to give you a more comprehensive understanding:
+
+1.  **Data Collection**:
+    -   **Satellite Imagery**: Captured by remote sensing satellites, these images can provide data on land cover, vegetation, weather patterns, and more.
+    -   **GPS Surveys**: Use Global Positioning System technology to collect precise location data for mapping and navigation purposes.
+    -   **Traditional Surveying Methods**: Involve measuring angles, distances, and elevations to map out areas accurately, often using tools like theodolites and total stations.
+
+------------------------------------------------------------------------
+
+2.  **Data Storage**:
+
+-   **`Shapefiles`**: A popular vector data format that stores geometric locations and associated attribute data.
+    -   It consists of `at least three files` with extensions `.shp` (geometry), `.shx` (shape index), and `.dbf` (attribute data).
+-   **`GeoJSON`**: A format for encoding a variety of geographic data structures using JavaScript Object Notation (JSON).
+-   **`GeoTIFF`**: A raster format that includes spatial metadata embedded within the file, making it suitable for georeferenced raster data like satellite images.
+-   **`Spatial Databases`**: PostgreSQL with PostGIS extensions enables the storage, querying, and manipulation of spatial data within a relational database system, supporting complex spatial operations and large datasets.
+
+3.  **Data Analysis**: The `sf` (simple features) package in R allows for the manipulation of spatial data, performing operations like spatial joins, transformations, and analysis. Other packages like `sp`, `rgdal`, `raster`, `rgeos`, `tmap`, `leaflet`, `mapview`, etc.
+
+4.  **Data Visualization**: `ggplot2` can create complex visualizations of spatial data, especially when combined with `sf` for handling geometric data.
+
+------------------------------------------------------------------------
+
+## Exploring the uses of spatial data:
+
+### A) Graphics with Spatial Data
+
+-   Spatial data in graphics is essential for uncovering nuanced patterns and trends:
+    -   **Interactive maps**: Enable dynamic user engagement through zooming, layer toggling, and clickable features, offering real-time exploration of spatial data.
+
+    -   **Heatmaps**: Visualize spatial density or intensity of variables such as crime rates, disease prevalence, or demographic distributions across geographic regions, providing immediate insights into spatial patterns.
+
+    -   **3D visualization**: Utilize spatial data to create immersive 3D representations, particularly useful for depicting topographical features or environmental data with elevation variations.
+
+    -   **Cartograms**: Distort geographical shapes to reflect data values, effectively illustrating comparisons such as economic disparities or population density in a visually impactful manner.
+
+    -   **Infographics**: Combine spatial maps with charts and graphs to deliver comprehensive insights, making complex spatial data more accessible and understandable to diverse audiences.
+
+------------------------------------------------------------------------
+
+### B) Statistics with Spatial Data
+
+-   Spatial data enhances statistical analysis by incorporating spatial relationships and geographic context:
+    -   **Descriptive statistics**: Calculate key metrics like averages, medians, and distributions tailored to spatial features such as elevation across counties or land use categories within regions.
+    -   **Geostatistical analysis**: Employ techniques like variograms to analyze spatial dependencies and autocorrelations, revealing how variables vary over space and identifying spatial clusters or patterns.
+    -   **Spatial regression**: Apply models that account for spatial proximity and spatial autocorrelation, providing more accurate predictions and understanding of spatially dependent phenomena.
+    -   **Hotspot analysis**: Identify spatial clusters of high or low values (e.g., crime hotspots, disease outbreaks) using spatial statistics, facilitating targeted interventions and resource allocation.
+    -   **Bayesian spatial models**: Utilize probabilistic frameworks to model uncertainty and variability in spatial data, essential for applications in epidemiology, environmental modeling, and risk assessment.
+
+------------------------------------------------------------------------
+
+### Statistical Software and Web-based Platforms
+
+**R Libraries (sp, sf, ggplot2)**:
+
+-   **Functionality**: Extend R's capabilities for handling spatial data with specialized packages such as sp and sf, integrating seamlessly with data manipulation tools in the tidyverse ecosystem.
+
+-   **Visualization**: Create publication-quality thematic maps and visualizations using ggplot2, offering detailed insights into spatial patterns and distributions.
+
+-   **Analysis**: Perform spatial operations, including spatial joins, buffering, and spatial queries, leveraging powerful geocomputational tools within R.
+
+------------------------------------------------------------------------
+
+**Leaflet (Web-based platform)**:
+
+-   **Functionality**: Deploy interactive and customizable web maps using Leaflet, ideal for developing dynamic spatial applications that interactively engage users with spatial data.
+
+-   **Applications**: Enable integration of spatial data into web-based tools and dashboards, facilitating real-time data visualization and exploration for diverse applications from urban planning to environmental monitoring.
+
+------------------------------------------------------------------------
+
+## Practice for Spatial Data in R
+
+-   **Spatial Data**: Information about the location and shape of geographic features.
+-   **Types**: Vector Data and Raster Data.
+
+## Vector Data
+
+-   Represents discrete objects in space. The 3 components are:
+    -   **Points**: Specific locations (e.g., monitoring stations).
+    -   **Lines**: Linear features (e.g., road networks).
+    -   **Polygons**: Area features (e.g., municipalities).
+-   **Associated Information**: Attributes such as temperature at monitoring stations or population in municipalities.
+
+------------------------------------------------------------------------
+
+## Raster Data
+
+-   A grid of cells (pixels), each with a value representing a spatially continuous phenomenon.Examples:
+
+    -   **Elevation**: Height above a reference point.
+    -   **Temperature**: Heat levels at various locations.
+    -   **Air Pollution**: Concentration of pollutants.
+
+-   **Grid Structure**: Regular cells of equal size.
+
+-   The **`sf`** and **`terra`** packages are the main tools for manipulating and analyzing spatial data in R.
+
+------------------------------------------------------------------------
+
+## Vector Data
+
+-   The **`sf`** package:
+    -   Used for working with vector data: points, lines, and polygons.
+    -   Example uses:
+        -   Locations of hospitals or monitoring stations (points).
+        -   Roads or rivers (lines).
+        -   Municipalities or districts (polygons).
+-   Can include associated information such as temperature values or population data.
+
+------------------------------------------------------------------------
+
+## Shapefile
+
+-   **Shapefile**: A common format for representing vector data.
+    -   **`.shp`**: Contains geometry data.
+    -   **`.shx`**: Positional index of the geometry data.
+    -   **`.dbf`**: Stores attributes for each shape.
+-   **Additional Files**:
+    -   **`.prj`**: Describes the projection (plain text).
+    -   **`.sbn`** and **`.sbx`**: Spatial indices of the geometry data.
+    -   **`.shp.xml`**: Contains spatial metadata in XML format.
+
+------------------------------------------------------------------------
+
+## Reading a Shapefile with `sf`
+
+-   Use the `st_read()` function from the `sf` package to read a shapefile.
+-   Example: Reading the shapefile of the counties of North Carolina, USA.
+
+```{r}
+library(sf)
+pathshp <- system.file("shape/nc.shp", package = "sf")
+```
+
+Examine the shape directory
+
+**shape**
+
+└── nc.shp
+
+└── nc.shx
+
+└── nc.dbf
+
+└── nc.prj
+
+------------------------------------------------------------------------
+
+```{r}
+# Read the shapefile
+map <- st_read(pathshp, quiet = TRUE)
+class(map)
+```
+
+```{r}
+# Display the first few rows of the data
+head(map, 4)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+plot(map[1]) # plot first attribute
+```
+
+------------------------------------------------------------------------
+
+## Raster Data
+
+-   **Raster Data**: A spatial data structure that divides the study region into equal-sized rectangles called cells or pixels, storing one or more values for each cell.
+-   **Uses**: Represent spatially continuous phenomena such as elevation, temperature, or air pollution values.
+-   **Main Packages**:
+    -   **`terra`**: Primary package for working with raster data. Also supports vector data.
+    -   **`raster`**: Previously used for raster data; **`terra`** is faster and has more functionality.
+    -   **`stars`**: Used for analyzing raster data and spatial data cubes (arrays with spatial dimensions).
+
+------------------------------------------------------------------------
+
+## GeoTIFF
+
+-   **GeoTIFF**: A common format for raster data, with the extension **`.tif`**.
+-   **Example**: Reading the **`elev.tif`** file from the **`terra`** package, representing elevation in Luxembourg.
+
+```{r}
+# Load the terra package 
+library(terra)
+pathraster <- system.file("ex/elev.tif", package = "terra")
+r <- terra::rast(pathraster)
+print(r)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+# Plot the raster data
+plot(r)
+```
+
+------------------------------------------------------------------------
+
+## EPSG Codes
+
+### EPSG Codes and CRS Transformation
+
+#### EPSG Codes
+
+-   Most common CRSs can be specified by providing their EPSG (European Petroleum Survey Group) codes or their Proj4 strings.
+
+Details of a given projection can be inspected using the `st_crs()` function of the `sf` package.
+
+-   Example: EPSG Code 4326
+
+-   EPSG code 4326 refers to the WGS84 longitude/latitude projection.
+
+```{r}
+st_crs("EPSG:4326")$Name
+st_crs("EPSG:4326")$proj4string
+st_crs("EPSG:4326")$epsg
+```
+
+------------------------------------------------------------------------
+
+## Transforming CRS with `sf` and `terra`
+
+-   Functions `sf::st_crs()` and `terra::crs()` allow us to get the CRS of spatial data.
+
+-   These functions also allow us to set a CRS to spatial data by using `st_crs(x) <- value` if `x` is a `sf` object, and `crs(r) <- value` if `r` is a raster.
+
+### Important Note
+
+-   Setting a CRS does not transform the data; it just changes the CRS label.
+
+-   We may want to set a CRS to data that does not come with CRS, and the CRS should be what it is, not what we would like it to be.
+
+-   We use `sf::st_transform()` and `terra::project()` to transform the `sf` or raster data, respectively, to a new CRS.
+
+------------------------------------------------------------------------
+
+## Working with `sf` Package
+
+### Reading and Getting the CRS
+
+```{r}
+library(sf)
+pathshp <- system.file("shape/nc.shp", package = "sf")
+map <- st_read(pathshp, quiet = TRUE)
+# Get CRS
+st_crs(map)
+```
+
+------------------------------------------------------------------------
+
+## Transforming the CRS
+
+```{r}
+# Transform CRS
+map2 <- st_transform(map, crs = "EPSG:4326")
+
+# Get CRS of transformed data
+st_crs(map2)
+
+```
+
+------------------------------------------------------------------------
+
+## Working with `terra` Package
+
+### Reading and Getting the CRS of a Raster
+
+```{r}
+library(terra)
+pathraster <- system.file("ex/elev.tif", package = "terra")
+r <- rast(pathraster)
+# Get CRS
+crs(r)
+```
+
+------------------------------------------------------------------------
+
+## Transforming the CRS of a Raster
+
+```{r}
+# Transform CRS
+r2 <- terra::project(r, "EPSG:2169")
+# Get CRS of transformed data
+crs(r2)
+```
+
+------------------------------------------------------------------------
+
+## **The sf package for spatial vector data**
+
+**The sf package**
+
+-   The **sf** package can be used to represent and work with spatial vector data including points, polygons, and lines, and their associated information.
+
+-   The **sf** package uses `sf` objects that are extensions of data frames containing a collection of simple features or spatial objects with possibly associated data.
+
+-   We can read a `sf` object with the [`st_read()`](https://r-spatial.github.io/sf/reference/st_read.html) function of **sf**.
+
+-   For example, here we read the `nc` shapefile of **sf** which contains the counties of North Carolina, USA, as well as their name, number of births, and number of sudden infant deaths in 1974 and 1979.
+
+```{r}
+library(sf) 
+pathshp <- system.file("shape/nc.shp", package = "sf") 
+nc <- st_read(pathshp, quiet = TRUE) 
+class(nc)
+```
+
+------------------------------------------------------------------------
+
+-   The `sf` object `nc` is a `data.frame` containing a collection with 100 simple features (rows) and 6 attributes (columns) plus a list-column with the geometry of each feature.
+-   A `sf` object contains the following objects of class `sf`, `sfc` and `sfg`:
+-   `sf` (simple feature): each row of the `data.frame` is a single simple feature consisting of attributes and geometry.
+-   `sfc` (simple feature geometry list-column): the `geometry` column of the `data.frame` is a list-column of class `sfc` with the geometry of each simple feature.
+-   `sfg` (simple feature geometry): each of the rows of the `sfc` list-column corresponds to the simple feature geometry (`sfg`) of a single simple feature.
+
+------------------------------------------------------------------------
+
+```{r}
+print(nc)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+plot(nc)
+```
+
+------------------------------------------------------------------------
+
+-   We can subset feature sets by using the square bracket notation and use the `drop` argument to drop geometries.
+
+```{r}
+nc[1, ] # first row 
+nc[nc$NAME == "Ashe", ] # row with NAME "Ashe"
+```
+
+------------------------------------------------------------------------
+
+```{r}
+nc[1, "NWBIR74"] # first row, column with name NWBIR74 
+nc[1, "NWBIR74", drop = TRUE] # drop geometry
+```
+
+-   The [`st_geometry()`](https://r-spatial.github.io/sf/reference/st_geometry.html) function can be used to retrieve the simple feature geometry list-column (`sfc`).
+
+------------------------------------------------------------------------
+
+```{r}
+# Geometries printed in abbreviated form 
+st_geometry(nc) # View complete geometry by selecting one 
+st_geometry(nc)[[1]]
+```
+
+------------------------------------------------------------------------
+
+## **Creating a `sf` object**
+
+-   We can use the [`st_sf()`](https://r-spatial.github.io/sf/reference/sf.html) function to create a `sf` object by providing two elements, namely, a `data.frame` with the attributes of each feature, and a simple feature geometry list-column `sfc` containing simple feature geometries `sfg`.
+
+-   In more detail, we create simple feature geometries `sfg` and use the [`st_sfc()`](https://r-spatial.github.io/sf/reference/sfc.html) function to create a simple feature geometry list-column `sfc` with them.
+
+-   Then, we use [`st_sf()`](https://r-spatial.github.io/sf/reference/sf.html) to put the `data.frame` with the attributes and the simple feature geometry list-column `sfc` together.
+
+Simple feature geometries `sfg` objects can be, for example, of type `POINT` (single point), `MULTIPOINT` (set of points) or `POLYGON` (polygon), and can be created with [`st_point()`](https://r-spatial.github.io/sf/reference/st.html), [`st_multipoint()`](https://r-spatial.github.io/sf/reference/st.html) and [`st_polygon()`](https://r-spatial.github.io/sf/reference/st.html), respectively.
+
+------------------------------------------------------------------------
+
+-   Here, we create a `sf` object containing two single points, a set of points, and a polygon, with one attribute.
+
+-   First, we create the simple feature geometry objects (`sfg`) of type `POINT`, `MULTIPOINT`, and `POLYGON`.
+
+-   Then, we use [`st_sfc()`](https://r-spatial.github.io/sf/reference/sfc.html) to create a simple feature geometry list-column `sfc` with the `sfg` objects.
+
+-   Finally, we use [`st_sf()`](https://r-spatial.github.io/sf/reference/sf.html) to put the `data.frame` with the attribute and the simple feature geometry list-column `sfc` together.
+
+------------------------------------------------------------------------
+
+```{r}
+# Single point (point as a vector) 
+p1_sfg <- st_point(c(2, 2)) 
+p2_sfg <- st_point(c(2.5, 3))  # Set of points (points as a matrix) 
+p <- rbind(c(6, 2), c(6.1, 2.6), c(6.8, 2.5), c(6.2, 1.5), c(6.8, 1.8)) 
+mp_sfg <- st_multipoint(p)  
+```
+
+------------------------------------------------------------------------
+
+```{r}
+p1 <- rbind(c(10, 0), c(11, 0), c(13, 2), c(12, 4), c(11, 4), c(10, 0)) 
+p2 <- rbind(c(11, 1), c(11, 2), c(12, 2), c(11, 1)) 
+pol_sfg <- st_polygon(list(p1, p2))  # Create sf object 
+p_sfc <- st_sfc(p1_sfg, p2_sfg, mp_sfg, pol_sfg) 
+df <- data.frame(v1 = c("A", "B", "C", "D")) 
+p_sf <- st_sf(df, geometry = p_sfc)  # Plot single points, set of points and polygon 
+library(ggplot2) 
+ggplot(p_sf) + geom_sf(aes(col = v1), size = 3) + theme_bw()
+```
+
+------------------------------------------------------------------------
+
+## **`st_*()` functions**
+
+Common functions to manipulate `sf` objects include the following:
+
+-   [`st_read()`](https://r-spatial.github.io/sf/reference/st_read.html) reads a `sf` object,
+-   [`st_write()`](https://r-spatial.github.io/sf/reference/st_write.html) writes a `sf` object,
+-   [`st_crs()`](https://r-spatial.github.io/sf/reference/st_crs.html) gets or sets a new coordinate reference system (CRS),
+-   [`st_transform()`](https://r-spatial.github.io/sf/reference/st_transform.html) transforms data to a new CRS,
+-   [`st_intersection()`](https://r-spatial.github.io/sf/reference/geos_binary_ops.html) intersects `sf` objects,
+-   [`st_union()`](https://r-spatial.github.io/sf/reference/geos_combine.html) combines several `sf` objects into one,
+-   [`st_simplify()`](https://r-spatial.github.io/sf/reference/geos_unary.html) simplifies a `sf` object,
+-   [`st_coordinates()`](https://r-spatial.github.io/sf/reference/st_coordinates.html) retrieves coordinates of a `sf` object,
+-   [`st_as_sf()`](https://r-spatial.github.io/sf/reference/st_as_sf.html) converts a foreign object to a `sf` object.
+
+------------------------------------------------------------------------
+
+For example, we can read a `sf` object as follows:
+
+```{r}
+library(sf) 
+library(ggplot2) 
+map <- read_sf(system.file("shape/nc.shp", package = "sf"))
+```
+
+We can inspect the first rows of the `sf` object `map` with [`head()`](https://rdrr.io/pkg/terra/man/headtail.html).
+
+```{r, eval=FALSE}
+head(map, 4)
+```
+
+------------------------------------------------------------------------
+
+-   We can delete some of the polygons by taking a subset of the rows of `map`.
+
+-   We can use [`st_union()`](https://r-spatial.github.io/sf/reference/geos_combine.html) with argument `by_feature = FALSE` to combine all geometries together.
+
+-   The boundaries of a map can be simplified with the [`st_simplify()`](https://r-spatial.github.io/sf/reference/geos_unary.html) function (Figure [3.3](https://www.paulamoraga.com/book-spatial/the-sf-package-for-spatial-vector-data.html#fig:spatialdeleteunionsimplify)).
+
+```{r}
+# Delete polygon 
+map <- map[-which(map$FIPS %in% c("37125", "37051")), ] 
+ggplot(map) + geom_sf(aes(fill = SID79))  
+```
+
+------------------------------------------------------------------------
+
+::: {layout-ncol="2"}
+::: left
+```{r}
+# Combine geometries 
+ggplot(st_union(map, by_feature=FALSE) %>% st_sf())+geom_sf() 
+```
+:::
+
+::: right
+```{r}
+# Simplify
+ggplot(st_simplify(map, dTolerance =10000))+geom_sf()
+```
+:::
+:::
+
+FIGURE 3.3: `sf` object obtained by deleting some of its polygons (top), combining polygons (middle), and simplifying polygons (bottom).
+
+------------------------------------------------------------------------
+
+## Transforming Point Data to an sf Object
+
+-   The `st_as_sf()` function allows us to convert a foreign object to an `sf` object.
+
+-   This can be specifying in the argument `coords` the name of the columns that contain the point coordinates.
+
+-   Example: Converting a Data Frame to an sf Object
+
+-   Here, we use `st_as_sf()` to turn a data frame containing coordinates `long` and `lat` and two variables `place` and `value` into an `sf` object.
+
+-   Then, we use `st_crs()` to set the coordinate reference system given by the EPSG code 4326 to represent longitude and latitude coordinates.
+
+------------------------------------------------------------------------
+
+```{r}
+library(sf)
+library(mapview)
+d <- data.frame(
+  place = c("London", "Paris", "Madrid", "Rome"),
+  long = c(-0.118092, 2.349014, -3.703339, 12.496366),
+  lat = c(51.509865, 48.864716, 40.416729, 41.902782),
+  value = c(200, 300, 400, 500))
+class(d)
+
+dsf <- st_as_sf(d, coords = c("long", "lat"))
+st_crs(dsf) <- 4326
+class(dsf)
+mapview(dsf)
+```
+
+------------------------------------------------------------------------
+
+## Counting the Number of Points within Polygons
+
+### Using `st_intersects()`
+
+-   We can use the `st_intersects()` function of `sf` to count the number of points within the polygons of an `sf` object.
+
+-   The returned object is a list with feature ids intersected in each of the polygons.
+
+-   We can use the `lengths()` function to calculate the number of points inside each feature.
+
+### Example: Counting Points within Polygons
+
+In this example, we create a map with divisions (an `sf` object) and generate random points over the map.
+
+------------------------------------------------------------------------
+
+We then count the number of points within each polygon using `st_intersects()` and visualize the results with `ggplot2`.
+
+```{r}
+library(sf)
+library(ggplot2)
+
+# Map with divisions (sf object)
+map <- read_sf(system.file("shape/nc.shp", package = "sf"))
+
+# Points over map (simple feature geometry list-column sfc)
+points <- st_sample(map, size = 100)
+
+# Map of points within polygons
+ggplot() + geom_sf(data = map) + geom_sf(data = points)
+
+# Intersection (first argument map, then points)
+inter <- st_intersects(map, points)
+
+# Add point count to each polygon
+map$count <- lengths(inter)
+
+# Map of number of points within polygons
+ggplot(map) + geom_sf(aes(fill = count))
+
+```
+
+------------------------------------------------------------------------
+
+## Identifying Polygons Containing Points
+
+### Using `st_intersects()`
+
+-   Given an `sf` object with points and an `sf` object with polygons, we can use the `st_intersects()` function to obtain the polygon each of the points belongs to.
+
+### Example: Identifying Polygons Containing Points
+
+-   In this example, we create a map with divisions (an `sf` object) and generate three random points over the map.
+
+-   We then identify which polygons contain these points and add the polygon names to the points data.
+
+```{r}
+library(sf)
+library(ggplot2)
+
+# Map with divisions (sf object)
+map <- read_sf(system.file("shape/nc.shp", package = "sf"))
+
+# Points over map (sf object)
+points <- st_sample(map, size = 3) %>% st_as_sf()
+
+# Intersection (first argument points, then map)
+inter <- st_intersects(points, map)
+
+# Adding column areaname with the name of the areas containing the points
+points$areaname <- map[unlist(inter), "NAME", drop = TRUE] # drop geometry
+points
+# Map
+ggplot(map) + geom_sf() + geom_sf(data = points) + 
+ geom_sf_label(data = map[unlist(inter), ], aes(label = NAME), nudge_y = 0.2)
+
+```
+
+------------------------------------------------------------------------
+
+## Joining Map and Data
+
+### Using `left_join()`
+
+-   Sometimes, a map and its corresponding data are available separately and we may wish to create an `sf` object representing the map with the added data that we can manipulate and plot.
+
+-   We can create an `sf` map with the data attributes by joining the map and the data with the `left_join()` function of the `dplyr` package.
+
+### Example: Adding Air Pollution Data to a World Map
+
+First, we use the `ne_countries()` function of `rnaturalearth` to download the world map with the country polygons of class `sf`.
+
+```{r}
+library(rnaturalearth)
+map <- ne_countries(returnclass = "sf")
+
+```
+
+------------------------------------------------------------------------
+
+Then, we use the `wbstats` package to download a data frame of air pollution data from the World Bank. Specifically, we search the pollution indicators with `wb_search()`, and use `wb_data()` to download PM2.5 in the year 2016 by specifying the indicator corresponding to PM2.5, and the start and end dates.
+
+```{r}
+library(wbstats)
+indicators <- wb_search(pattern = "pollution")
+#d <- wb_data(indicator = "EN.ATM.PM25.MC.M3", start_date = 2016, end_date = 2016)
+
+```
+
+------------------------------------------------------------------------
+
+Next, we use the `left_join()` function of `dplyr` to join the map and the data, specifying the argument `by` with the variables we wish to join by. Here, we use the ISO3 standard code of the countries rather than the country names, since names can be written differently in the map and the data frame.
+
+```{r, eval=FALSE}
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+map1 <- left_join(map, d, by = c("iso_a3" = "iso3c"))
+ggplot(map1) + geom_sf(aes(fill = EN.ATM.PM25.MC.M3)) +
+  scale_fill_viridis() + labs(fill = "PM2.5") + theme_bw()
+
+```
+
+------------------------------------------------------------------------
+
+### Note
+
+When we use `left_join()`, the class of the resulting object is the same as the class of the first argument.
+
+```{r, eval=FALSE}
+map1 <- left_join(map, d, by = c("iso_a3" = "iso3c"))
+class(map1)
+# [1] "sf" "data.frame"
+
+d1 <- left_join(d, map, by = c("iso3c" = "iso_a3"))
+class(d1)
+# [1] "data.frame"
+
+```
+
+------------------------------------------------------------------------
+
+## The `terra` Package for Raster and Vector Data
+
+The `terra` package (Hijmans 2022) provides functions to create, read, manipulate, and write raster and vector data. Raster data represents spatially continuous phenomena through a grid of equally sized cells, while vector data includes points, lines, and polygons with associated attributes. This chapter demonstrates how to handle raster and vector data using `terra`.
+
+------------------------------------------------------------------------
+
+## Raster Data
+
+### Creating and Reading Raster Data
+
+The `rast()` function can create and read raster data. The `writeRaster()` function allows writing raster data. Here, we read elevation data for Luxembourg from a file provided by `terra`.
+
+```{r}
+library(terra) 
+pathraster <- system.file("ex/elev.tif", package = "terra") 
+r <- rast(pathraster)
+plot(r)
+```
+
+------------------------------------------------------------------------
+
+We can also create a `SpatRaster` object by specifying dimensions and extents.
+
+### Raster Operations
+
+Several functions provide information about raster size and dimensions.
+
+```{r}
+nrow(r) # number of rows
+ncol(r) # number of columns
+dim(r) # dimensions
+ncell(r) # number of cells
+```
+
+The `values()` function sets and accesses raster values.
+
+```{r}
+values(r) <- 1:ncell(r)
+
+```
+
+Creating multilayer rasters and subsetting layers is straightforward.
+
+```{r}
+r2 <- r * r
+s <- c(r, r2)
+plot(s[[2]]) # layer 2
+
+```
+
+------------------------------------------------------------------------
+
+Generic operations on rasters include:
+
+```{r}
+plot(min(s))
+plot(r + r + 10)
+plot(round(r))
+plot(r == 1)
+
+```
+
+------------------------------------------------------------------------
+
+## Vector Data
+
+The `SpatVector` class handles vector data with attributes. The `vect()` function reads shapefiles, and `writeVector()` writes `SpatVector` objects. Here, we obtain a map of Luxembourg's divisions.
+
+```{r}
+pathshp <- system.file("ex/lux.shp", package = "terra")
+v <- vect(pathshp)
+
+```
+
+------------------------------------------------------------------------
+
+Creating a `SpatVector` with point locations and attributes:
+
+```{r}
+long <- c(-0.118092, 2.349014, -3.703339, 12.496366)
+lat <- c(51.509865, 48.864716, 40.416729, 41.902782)
+longlat <- cbind(long, lat)
+
+crspoints <- "+proj=longlat +datum=WGS84"
+d <- data.frame(place = c("London", "Paris", "Madrid", "Rome"), value = c(200, 300, 400, 500))
+pts <- vect(longlat, atts = d, crs = crspoints)
+plot(pts)
+
+```
+
+------------------------------------------------------------------------
+
+## Cropping, Masking, and Aggregating Raster Data
+
+The `terra` package provides functions to crop, mask, and aggregate raster data. Here, we demonstrate these operations with temperature data for Spain.
+
+### Downloading Data
+
+```{r, eval=FALSE}
+library(terra)
+r <- geodata::worldclim_country(country = "Spain", var = "tavg", res = 10, path = tempdir())
+plot(r)
+```
+
+------------------------------------------------------------------------
+
+## Averaging Temperature Data
+
+```{r, eval=FALSE}
+r <- mean(r)
+plot(r)
+
+```
+
+------------------------------------------------------------------------
+
+## Cropping and Masking Data

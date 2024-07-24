@@ -37,8 +37,6 @@ csl: apa.csl
 
 -   R packages for SAE
 
--   Visualizing spatial data
-
 ------------------------------------------------------------------------
 
 ## 

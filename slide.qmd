@@ -27,6 +27,7 @@ editor: visual
 
 -   R packages for SAE
 
+<<<<<<< HEAD:slide.qmd
 -   Visualizing spatial data
 
 ## 
@@ -34,6 +35,9 @@ editor: visual
 **Sample** surveys have long been *recognized* as cost-effective means of obtaining information on wide-ranging topics of interest at frequent intervals over time.
 
 They are widely used in practice to provide estimates not only for the total population of interest but also for a variety of subpopulations (domains). [Domains]{style="color:red"} may be defined by geographic areas or socio-demographic groups or other subpopulations. Examples of a geographic domain (area) include a state/province, county, municipality, school district, unemployment insurance (UI) region, metropolitan area, and health service area.
+=======
+------------------------------------------------------------------------
+>>>>>>> 8b855c1903cb15d3acfaec6f1d642db30824217d:slides/slide.qmd
 
 ## 
 
